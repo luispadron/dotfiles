@@ -29,5 +29,12 @@ else
     ln -s .dotfiles/vimrc .vimrc
 fi
 
+# Copy vim folder
+if ! ls vim 1> /dev/null 2>&1;
+then 
+    echo "Copying vim files to home."
+    cp -a .dotfiles/vim ~/.vim
+fi
+
 # Reload bash
 echo "Install done, reload shell to take effect."
