@@ -1,0 +1,98 @@
+# Color scheme inspired by https://github.com/zenorocha/dracula-theme/
+if [[ $COLORTERM = gnome-* && $TERM = xterm ]] && infocmp gnome-256color >/dev/null 2>&1; then
+	export TERM='gnome-256color';
+elif infocmp xterm-256color >/dev/null 2>&1; then
+	export TERM='xterm-256color';
+fi;
+
+if tput setaf 1 &> /dev/null; then
+  tput sgr0; # reset colors
+  bold=$(tput bold);
+  reset=$(tput sgr0);
+  green=$(tput setaf 47);
+  cyan=$(tput setaf 45);
+  orange=$(tput setaf 178);
+  pink=$(tput setaf 212);
+  purple=$(tput setaf 177);
+  red=$(tput setaf 160);
+  yellow=$(tput setaf 227);
+fi
+
+# get current branch in git repo
+function parse_git_branch() {
+  if [ $(git rev-parse --is-inside-work-tree &>/dev/null; echo "${?}") == '0' ]; then
+    branchName="$(git symbolic-ref --quiet --short HEAD 2> /dev/null || \
+      git rev-parse --short HEAD 2> /dev/null || \
+      echo '(unknown)')";
+    echo "(${branchName})"
+  else
+    echo ""
+  fi
+}
+
+# get current status of git repo
+function parse_git_dirty {
+  if [ $(git rev-parse --is-inside-work-tree &>/dev/null; echo "${?}") == '0' ]; then
+    status=`git status 2>&1 | tee`
+    dirty=`echo -n "${status}" 2> /dev/null | grep "modified:" &> /dev/null; echo "$?"`
+    untracked=`echo -n "${status}" 2> /dev/null | grep "Untracked files" &> /dev/null; echo "$?"`
+    ahead=`echo -n "${status}" 2> /dev/null | grep "Your branch is ahead of" &> /dev/null; echo "$?"`
+    newfile=`echo -n "${status}" 2> /dev/null | grep "new file:" &> /dev/null; echo "$?"`
+    renamed=`echo -n "${status}" 2> /dev/null | grep "renamed:" &> /dev/null; echo "$?"`
+    deleted=`echo -n "${status}" 2> /dev/null | grep "deleted:" &> /dev/null; echo "$?"`
+    bits=''
+    if [ "${renamed}" == "0" ]; then
+      bits="> ${bits}"
+    fi
+    if [ "${ahead}" == "0" ]; then
+      bits="* ${bits}"
+    fi
+    if [ "${newfile}" == "0" ]; then
+      bits="+ ${bits}"
+    fi
+    if [ "${untracked}" == "0" ]; then
+      bits="? ${bits}"
+    fi
+    if [ "${deleted}" == "0" ]; then
+      bits="x ${bits}"
+    fi
+    if [ "${dirty}" == "0" ]; then
+      bits="! ${bits}"
+    fi
+    if [ ! "${bits}" == "" ]; then
+      echo " ${bits}"
+    else
+      echo ""
+    fi
+  else 
+    echo ""
+  fi
+}
+
+function is_git_clean {
+  if [ $(git rev-parse --is-inside-work-tree &>/dev/null; echo "${?}") == '0' ]; then
+    if $(git diff --quiet) && ! [ -n "$(git ls-files --others --exclude-standard)" ] && $(git diff --quiet --ignore-submodules --cached); then
+      echo " ✓"  
+    fi
+  fi
+}
+
+PS1="\[\${bold}${green}\]λ ";  # Lambda
+
+# If connected to SSH then highlight host.
+if [[ -n $SSH_CLIENT ]]; then
+  hostStyle="${bold}${red}";
+  PS1+="\[${hostStyle}\]\h"; # Display hostname
+fi;
+
+PS1+="\[\${purple}\]\W"; # Working directory
+PS1+="\[\${cyan}\]\`parse_git_branch\`"; # Display git branch
+PS1+="\[\${green}\]\`is_git_clean\`\[\${yellow}\]\`parse_git_dirty\` \[\e[m\]"; # Git status
+export PS1;
+
+PS2="\[${yellow}\]→ \[${reset}\]";
+export PS2;
+
+if [ -f `brew --prefix`/etc/bash_completion ]; then
+. `brew --prefix`/etc/bash_completion
+fi
