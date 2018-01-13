@@ -85,7 +85,7 @@ if [[ -n $SSH_CLIENT ]]; then
   PS1+="\[${hostStyle}\]\h"; # Display hostname
 fi;
 
-PS1+="\[\${purple}\]\W"; # Working directory
+PS1+="\[\${purple}\]\W "; # Working directory
 PS1+="\[\${cyan}\]\`parse_git_branch\`"; # Display git branch
 PS1+="\[\${green}\]\`is_git_clean\`\[\${yellow}\]\`parse_git_dirty\` \[\e[m\]"; # Git status
 export PS1;
