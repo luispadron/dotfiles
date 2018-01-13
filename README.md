@@ -1,0 +1,6 @@
+## Dotfiles
+
+My dotfiles, you're welcome to use them if you wish.
+I use these in conjunction with [bash-it](https://github.com/Bash-it/bash-it).
+
+![demo-img](https://raw.githubusercontent.com/luispadron/Dotfiles/master/.github/screen.png)
