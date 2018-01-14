@@ -39,7 +39,10 @@ source "$BASH_IT"/bash_it.sh
 alias showFiles='defaults write com.apple.finder AppleShowAllFiles YES; killall Finder /System/Library/CoreServices/Finder.app'
 alias hideFiles='defaults write com.apple.finder AppleShowAllFiles NO; killall Finder /System/Library/CoreServices/Finder.app'
 
-# Add all SSH keys 
+# School SSH alias
+alias sshcaen='ssh heyluis@oncampus-course.engin.umich.edu'
+
+# Add all SSH keys
 ssh-add -A 2>/dev/null;
 
 # Export and set the path for rbenv
