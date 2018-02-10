@@ -42,6 +42,9 @@ alias hideFiles='defaults write com.apple.finder AppleShowAllFiles NO; killall F
 # School SSH alias
 alias sshcaen='ssh heyluis@oncampus-course.engin.umich.edu'
 
+# A really dumb alias
+alias gitdriveby='git add -A;git commit -m "$(curl -s whathecommit.com/index.txt)";git push'
+
 # Add all SSH keys
 ssh-add -A 2>/dev/null;
 
