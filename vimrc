@@ -1,11 +1,15 @@
 " General setup
 filetype on
 " Enable syntax
-syntax on 
+syntax on
 " Show line numbers
 set number
 " Show matching parenthesis
-set showmatch 
+set showmatch
+" Show cursor line
+set cursorline
+" Show column line
+set cursorcolumn
 
 " Tab size/indent
 filetype indent on
