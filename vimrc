@@ -20,8 +20,11 @@ set smartindent
 set autoindent
 
 " Themes
-colorscheme tomorrow-night-eighties
-set guifont=Menlo\ Regular:h18
+if (has("termguicolors"))
+    set termguicolors
+endif
+
+colorscheme oceanic-next
 
 " Ruler
 set colorcolumn=90
