@@ -27,7 +27,7 @@ endif
 colorscheme oceanic-next
 
 " Ruler
-set colorcolumn=90
+set colorcolumn=120
 
 " Remove whitespace on save
 autocmd BufWritePre * :%s/\s\+$//e
