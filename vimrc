@@ -11,6 +11,9 @@ set cursorline
 " Show column line
 set cursorcolumn
 
+" Set jk to escape
+:imap jk <Esc>
+
 " Tab size/indent
 filetype indent on
 set tabstop=4
