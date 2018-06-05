@@ -10,7 +10,7 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'sheerun/vim-polyglot'
 Plugin 'joshdick/onedark.vim'
-Plugin 'vim-syntastic/syntastic'
+Plugin 'editorconfig/editorconfig-vim'
 
 call vundle#end()            " required
 
